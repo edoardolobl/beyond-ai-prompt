@@ -9,7 +9,7 @@
 
 ## 📖 Sobre o Projeto
 
-Esta é uma apresentação web interativa, construída com HTML, CSS e JavaScript puro, que explora a jornada da engenharia de IA moderna. O projeto vai além das técnicas básicas de prompt para discutir conceitos fundamentais, arquiteturas avançadas como RAG (Retrieval-Augmented Generation) e MCP (Model-driven Co-programming Protocol), e as melhores práticas para extrair o máximo de performance de modelos de linguagem.
+Esta é uma apresentação web interativa, construída com HTML, CSS e JavaScript puro, que explora a jornada da engenharia de IA moderna. O projeto vai além das técnicas básicas de prompt para discutir conceitos fundamentais, arquiteturas avançadas como RAG (Retrieval-Augmented Generation) e MCP (Model Context Protocol), e as melhores práticas para extrair o máximo de performance de modelos de linguagem.
 
 O objetivo é fornecer uma visão completa e aprofundada, demonstrando por que a habilidade humana de guiar a IA é mais crucial do que nunca, mesmo com o avanço exponencial dos modelos.
 
