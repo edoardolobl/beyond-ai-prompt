@@ -63,9 +63,16 @@ Este projeto não requer nenhum processo de build ou instalação.
 
 O projeto é organizado de forma simples e clara:
 
-
-<pre><code>/ ├── 📄 index.html # A estrutura e todo o conteúdo dos slides ├── 🎨 style.css # Todas as regras de estilo e layout ├── ⚙️ app.js # Lógica da apresentação, navegação e interatividade ├── 🖼️ benchmark_1.png # Imagens utilizadas nos slides ├── 🖼️ benchmark_2.png ├── 🖼️ image_deb107.png └── 🖼️ image_e1675c.png </code></pre>
-
+```text
+/
+├── 📄 index.html       # A estrutura e todo o conteúdo dos slides
+├── 🎨 style.css        # Todas as regras de estilo e layout
+├── ⚙️ app.js           # Lógica da apresentação, navegação e interatividade
+├── 🖼️ benchmark_1.png  # Imagens utilizadas nos slides
+├── 🖼️ benchmark_2.png
+├── 🖼️ image_deb107.png
+└── 🖼️ image_e1675c.png
+```
 
 ## 🔗 Recursos e Ferramentas Adicionais
 
