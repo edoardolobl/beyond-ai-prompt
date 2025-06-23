@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Técnicas de Prompt Engineering</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <!-- Slide Container -->
+        <div class="slide-container" id="slideContainer">
+            <!-- Slide 1: Título -->
+            <div class="slide active" data-slide="1">
+                <div class="slide-content title-slide-elegant">
+                    <div class="title-wrapper">
+                        <h1>Além do Prompt: Construindo com IA</h1>
+                        <h2>Um Guia Prático sobre Técnicas, RAG e MCP</h2>
+                        <p class="subtitle">Maximizando o potencial de modelos de linguagem em aplicações reais</p>
+                    </div>
+                    <div class="author-info">
+                        <p>Edoardo Lobl - 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" data-slide="2">
+                <div class="slide-content">
+                    <h1>Por que a Engenharia de Prompts é Crucial?</h1>
+                    <p class="description">Ela é a ponte entre o potencial bruto da IA e os resultados de alto valor no mundo real, definindo o sucesso de qualquer projeto.</p>
+                    <div class="content-grid">
+                        <div class="concept-box">
+                            <h3>🎯 Precisão e Relevância</h3>
+                            <p>Transforma respostas genéricas e muitas vezes inúteis em soluções precisas, contextuais e prontas para uso.</p>
+                        </div>
+                        <div class="concept-box">
+                            <h3>💰 Eficiência e Custo</h3>
+                            <p>Prompts otimizados usam menos tokens e poder computacional, resultando em respostas mais rápidas e custos operacionais menores.</p>
+                        </div>
+                        <div class="concept-box">
+                            <h3>🛡️ Segurança e Controle</h3>
+                            <p>É a principal ferramenta para guiar o comportamento do modelo, mitigando vieses, "alucinações" e respostas indesejadas.</p>
+                        </div>
+                        <div class="concept-box">
+                            <h3>🚀 Inovação e Diferenciação</h3>
+                            <p>Permite criar aplicações com comportamentos únicos e sofisticados, que se destacam da concorrência e encantam os usuários.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" data-slide="3">
+                <div class="slide-content">
+                    <h1>O Paradoxo da Performance da IA</h1>
+                    
+                    <div class="benchmark-container">
+                        <div class="benchmark-card hype-card" id="hypeCard">
+                            <div class="benchmark-image-wrapper">
+                                <img src="benchmark_2.png" alt="Benchmark de modelos como Claude 3.5 Sonnet e GPT-4o">
+                                <div class="red-x">✖</div>
+                            </div>
+                            <div class="benchmark-text">
+                                <h3>O Cenário: A Corrida dos Benchmarks</h3>
+                                <p>A cada novo lançamento, vemos pontuações impressionantes em testes acadêmicos e de conhecimento geral.</p>
+                                <p class="click-hint"><strong>(Clique aqui para ver a realidade)</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="benchmark-card reality-card">
+                            <div class="benchmark-image-wrapper">
+                                <img src="benchmark_1.png" alt="Benchmark do LiveCodeBench Pro mostrando 0% em problemas difíceis">
+                            </div>
+                            <div class="benchmark-text">
+                                <h3>A Realidade: Problemas Complexos</h3>
+                                <p>No entanto, o estudo <strong>LiveCodeBench Pro</strong> revela que, em problemas de programação <strong>inéditos e difíceis</strong>, a performance dos melhores modelos cai para <strong>0%</strong>.</p>
+                            </div>
+                        </div>
+
+                        <div class="benchmark-conclusion">
+                            <p><strong>Conclusão:</strong> Os modelos são excelentes em implementação, mas ainda falham em <strong>raciocínio algorítmico complexo</strong>. É aqui que a sua habilidade em Engenharia de Prompts se torna indispensável para guiar a IA e gerar valor real.</p>
+                            <div class="citation-text">
+                                <p>Fonte: ZHENG, Zihan et al. LiveCodeBench Pro: How Do Olympiad Medalists Judge LLMs in Competitive Programming?. arXiv preprint arXiv:2506.11928, 2025. Acesso em: 23 jun. 2025.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Conceitos Fundamentais -->
+            <div class="slide" data-slide="4">
+                <div class="slide-content">
+                    <h1>A Linguagem das IAs: Tokens e Contexto</h1>
+                    <p class="description">Para criar bons prompts, primeiro precisamos entender como a IA "lê". Ela não vê palavras, mas sim peças de linguagem chamadas <strong>Tokens</strong>.</p>
+                    
+                    <div class="concept-definition" style="text-align: center;">
+                        <h3>🧩 Pense em Tokens como peças de LEGO</h3>
+                        <p>Uma frase é um conjunto de peças que a IA usa para construir uma resposta.</p>
+                        <div class="code-block" style="font-size: var(--font-size-lg);">
+                            O prompt engineering é fascinante → [O] [prompt] [engineering] [é] [fascin][ante]
+                        </div>
+                    </div>
+
+                    <div class="two-column" style="margin-top: 24px;">
+                        <div class="column">
+                            <h3>🪟 Context Window (A Mesa de Trabalho)</h3>
+                            <p>É o tamanho da "mesa" que a IA tem para trabalhar. Define quantos tokens (peças) ela consegue ver de uma só vez para entender a conversa e formular uma resposta.</p>
+                        </div>
+                        <div class="column">
+                            <h3>🧠 Reasoning (O Manual de Instruções)</h3>
+                            <p>É a capacidade da IA de usar a lógica para conectar os tokens (as peças) de forma coerente, seguindo as instruções do seu prompt para criar algo novo e relevante.</p>
+                        </div>
+                    </div>
+                    <div class="note" style="margin-top: 24px;">
+                        <p><strong>De onde vem o conhecimento?</strong> A "inteligência" da IA vem do seu treinamento em uma cópia massiva da internet. A grande maioria desses dados está em inglês, o que impacta diretamente suas habilidades em outras línguas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Tokenização Detalhada -->
+            <div class="slide" data-slide="5">
+                <div class="slide-content">
+                    <h1>O Custo dos Tokens: Português vs. Inglês</h1>
+                    <p class="description">O idioma do seu prompt impacta diretamente o custo, a velocidade e a qualidade da resposta. O português, por ser mais complexo, geralmente consome mais tokens.</p>
+
+                    <div class="two-column">
+                        <div class="column" style="text-align: center; background-color: var(--color-secondary); border-radius: var(--radius-lg); padding: 16px;">
+                            <h3>Inglês</h3>
+                            <div class="code-block" style="font-size: var(--font-size-lg);">I am learning → [I] [am] [learning]</div>
+                            <h3 style="color: var(--color-primary);">3 Tokens</h3>
+                        </div>
+                        <div class="column" style="text-align: center; background-color: var(--color-secondary); border-radius: var(--radius-lg); padding: 16px;">
+                            <h3>Português</h3>
+                            <div class="code-block" style="font-size: var(--font-size-lg);">Eu estou aprendendo → [Eu] [estou] [aprende][ndo]</div>
+                            <h3 style="color: var(--color-primary);">4 Tokens (+33%)</h3>
+                        </div>
+                    </div>
+
+                    <div class="mcp-content">
+                        <h3>O Impacto Real no seu Projeto:</h3>
+                        <ul>
+                            <li><strong>Custo ($):</strong> Para uma mesma tarefa, um texto em português pode custar 20-30% a mais, pois necessita de mais tokens para transmitir a mesma informação.</li>
+                            <li><strong>Velocidade:</strong> Mais tokens para processar significa maior tempo de geração de resposta.</li>
+                            <li><strong>Contexto:</strong> Um prompt em português "gasta" mais rápido o espaço limitado da <i>Context Window</i>, deixando menos memória para a IA lembrar de partes anteriores da conversa.</li>
+                        </ul>
+                    </div>
+                    <h3 style="margin-top: 24px;">Por que isso acontece? As Duas Razões Principais:</h3>
+                    <div class="two-column">
+                        <div class="column">
+                            <h4>1. Estrutura do Idioma</h4>
+                            <p>Como vimos, a rica morfologia do português (conjugações, gêneros, etc.) naturalmente gera mais tokens. LLMs modernos não "lematizam" como antigamente, eles aprendem cada variação, aumentando o consumo de tokens.</p>
+                        </div>
+                        <div class="column">
+                            <h4>2. Desbalanceamento dos Dados</h4>
+                            <p>Com até 20x mais dados em inglês no seu "cérebro", a IA desenvolve um raciocínio mais sofisticado e uma compreensão mais profunda de nuances nesse idioma. Para tarefas muito complexas, usar inglês no prompt pode gerar resultados superiores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Zero-Shot Prompting -->
+            <div class="slide" data-slide="6">
+                <div class="slide-content">
+                    <h1>Técnica 1: Zero-Shot Prompting</h1>
+                    <p class="description"><strong>Estudo de Caso: O Assistente de Viagens.</strong><br>Começamos com a abordagem mais simples: pedir ao nosso assistente para criar um roteiro sem fornecer nenhum exemplo.</p>
+                    
+                    <div class="examples-container">
+                        <div class="example-box">
+                            <h3>Exemplo: Roteiro Genérico</h3>
+                            <div class="code-block">
+                                <strong>Prompt:</strong><br>
+                                Crie um roteiro de 3 dias para o Rio de Janeiro.
+                            </div>
+                            <div class="output-block">
+                                <strong>Saída Provável:</strong><br>
+                                Dia 1: Cristo Redentor e Pão de Açúcar<br>
+                                Dia 2: Praias de Copacabana e Ipanema<br>
+                                Dia 3: Jardim Botânico e Lapa<br>
+                                <br>
+                                <i>(Correto, mas genérico e sem personalização.)</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Few-Shot Prompting -->
+            <div class="slide" data-slide="7">
+                <div class="slide-content">
+                    <h1>Técnica 2: Few-Shot Prompting</h1>
+                    <p class="description">O resultado anterior foi genérico. Agora, vamos ensinar nosso assistente, dando a ele alguns exemplos de roteiros para perfis diferentes.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: Roteiro Personalizado por Perfil</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Crie um roteiro de 1 dia no Rio de Janeiro para o perfil solicitado.<br><br>
+                            ---<br>
+                            <strong>Perfil:</strong> Aventureiro<br>
+                            <strong>Roteiro:</strong> Trilha da Pedra da Gávea pela manhã, voo de asa-delta à tarde.<br>
+                            ---<br>
+                            <strong>Perfil:</strong> Cultural<br>
+                            <strong>Roteiro:</strong> Visita ao Museu do Amanhã e passeio pelo centro histórico.<br>
+                            ---<br>
+                            <strong>Perfil:</strong> Gastronômico<br>
+                            <strong>Roteiro:</strong> [?]
+                        </div>
+                        <div class="output-block">
+                            <strong>Saída:</strong> Tour gastronômico em Santa Teresa e aula de culinária com feijoada.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Chain of Thought -->
+            <div class="slide" data-slide="8">
+                <div class="slide-content">
+                    <h1>Técnica 3: Chain of Thought (CoT)</h1>
+                    <p class="description">Para otimizar um roteiro, não basta dar exemplos. Pedimos ao assistente para explicar seu raciocínio passo a passo.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: Otimização de Roteiro</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Eu tenho 3 dias em Roma e quero visitar o Coliseu, o Vaticano e a Fontana di Trevi, mas quero evitar as maiores multidões e otimizar o tempo. Crie um roteiro ideal, explicando sua lógica passo a passo.
+                        </div>
+                        <div class="output-block">
+                            <strong>Saída:</strong><br>
+                            Claro, vamos otimizar seu roteiro:<br>
+                            <strong>Passo 1:</strong> O Vaticano é mais cheio nas quartas-feiras (audiência papal). Vamos agendá-lo para terça de manhã, que costuma ser mais tranquilo.<br>
+                            <strong>Passo 2:</strong> O Coliseu fica perto do Fórum Romano. Podemos agrupar os dois na quarta-feira para economizar deslocamento.<br>
+                            <strong>Passo 3:</strong> A Fontana di Trevi é linda à noite e fica aberta. Deixaremos para o final da noite de terça, após o jantar, quando a multidão diminui.<br><br>
+                            <strong>Roteiro Final: [combina os passos de forma lógica]</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Role Prompting -->
+            <div class="slide" data-slide="9">
+                <div class="slide-content">
+                    <h1>Técnica 4: Role Prompting (Atribuição de Papel)</h1>
+                    <p class="description">Podemos melhorar drasticamente os resultados ao atribuir uma persona ao nosso assistente. Em vez de um "chatbot genérico", ele se torna um especialista no assunto.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: O Guia Turístico Especialista</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Você é um Guia Turístico "cinco estrelas" especializado em história e gastronomia na Itália. Um casal com orçamento moderado pediu um roteiro de 1 dia em Florença que combine os dois interesses. Crie uma sugestão para eles, usando sua expertise.
+                        </div>
+                        <div class="output-block">
+                            <strong>Saída:</strong><br>
+                            "Buongiorno! Como seu guia particular em Florença, preparei um dia inesquecível. Pela manhã, mergulharemos na história na Gallerie dell'Accademia para ver o Davi original (reserve ingressos para evitar filas!). Para o almoço, vamos fugir das 'armadilhas para turistas' e seguir para o Mercato Centrale, onde vocês encontrarão comida local autêntica e acessível no andar de cima. À tarde, uma caminhada pela Ponte Vecchio nos levará a um tour gastronômico no bairro de Oltrarno, finalizando com um autêntico gelato. Che ne dite? (O que acham?)"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Tree of Thought -->
+            <div class="slide" data-slide="10">
+                <div class="slide-content">
+                    <h1>Técnica Avançada: Tree of Thought (ToT)</h1>
+                    <p class="description">Levando nosso assistente a um novo nível: em vez de um único raciocínio, ele agora explora e avalia múltiplos roteiros possíveis antes de apresentar a combinação ideal.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: Planejamento de Viagem Multicritério</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Planeje uma viagem de 3 dias para Salvador. Considere 3 abordagens diferentes: cultural, gastronômica e aventura. Avalie os prós e contras de cada uma e, ao final, proponha a melhor combinação.
+                        </div>
+                        <div class="output-block">
+                            <strong>Saída:</strong><br>
+                            <strong>Abordagem 1 - Cultural:</strong> Foco no Pelourinho, Museus, Igreja do Bonfim. Prós: imersão histórica. Contras: pode ser cansativo.<br>
+                            <strong>Abordagem 2 - Gastronômica:</strong> Foco no Mercado Modelo, restaurantes premiados, aulas de culinária. Prós: delicioso. Contras: caro.<br>
+                            <strong>Abordagem 3 - Aventura:</strong> Foco em praias, trilhas, esportes aquáticos. Prós: emocionante. Contras: depende do clima.<br><br>
+                            <strong>Combinação Ideal Sugerida:</strong> Dia 1 (Cultural), Dia 2 (Praia + Gastronomia), Dia 3 (Aventura leve + Compras).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Self-Consistency -->
+            <div class="slide" data-slide="11">
+                <div class="slide-content">
+                    <h1>Técnica Avançada: Self-Consistency</h1>
+                    <p class="description">Para problemas de raciocínio complexo, onde um erro pode comprometer todo o resultado, usamos esta técnica. Ela força a IA a resolver o mesmo problema várias vezes por caminhos diferentes e, ao final, escolhe a resposta que aparece com mais frequência. É como pedir uma "segunda opinião" da própria IA para garantir.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: Problema de Raciocínio Lógico</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Maria tem 3 vezes a idade de João. Em 5 anos, ela terá 2 vezes a idade dele. Quantos anos eles têm hoje? (Resolva de 3 maneiras diferentes para garantir a resposta)
+                        </div>
+                        <div class="output-block">
+                            <strong>Processo:</strong> A IA gera múltiplas cadeias de raciocínio.<br><br>
+                            <strong>Caminho 1 (Álgebra):</strong> M = 3J; M+5 = 2(J+5) → Resolvendo o sistema, chego em <strong>Maria=15, João=5</strong>.<br>
+                            <strong>Caminho 2 (Lógica):</strong> Se João tivesse 4, Maria teria 12. Em 5 anos, teriam 9 e 17 (não é o dobro). Se João tiver 5, Maria tem 15. Em 5 anos, 10 e 20 (é o dobro!). Resposta: <strong>Maria=15, João=5</strong>.<br>
+                            <strong>Caminho 3 (Tentativa e Erro):</strong> ...[outra tentativa]... Resultado: <strong>Maria=15, João=5</strong>.<br><br>
+                            <strong>Resposta Consistente:</strong> Maria tem 15 anos e João tem 5.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Generated Knowledge Prompting -->
+            <div class="slide" data-slide="12">
+                <div class="slide-content">
+                    <h1>Técnica 5: Generated Knowledge Prompting</h1>
+                    <p class="description">E se o assistente não souber detalhes sobre um destino? Com esta técnica, primeiro pedimos para ele "pesquisar", gerando fatos sobre o local, e só então usar esse conhecimento para "escrever" a recomendação.</p>
+                    
+                    <div class="example-box">
+                        <h3>Exemplo: Roteiro para Destino Pouco Conhecido</h3>
+                        <div class="code-block">
+                            <strong>Prompt:</strong><br>
+                            Estou indo para a Chapada dos Veadeiros. Primeiro, gere 5 fatos importantes sobre o local, incluindo dicas práticas. Depois, use esses fatos para escrever um parágrafo de boas-vindas para um turista.
+                        </div>
+                        <div class="output-block">
+                            <strong>1. Conhecimento Gerado:</strong><br>
+                            - Fato 1: A região é famosa por seus cristais de quartzo à superfície.<br>
+                            - Fato 2: O Parque Nacional fecha às segundas-feiras.<br>
+                            - Fato 3: É crucial levar dinheiro em espécie, pois o sinal de internet para pagamentos é ruim.<br>
+                            - Fato 4: A contratação de guias é obrigatória para certas trilhas.<br>
+                            - Fato 5: A melhor época para visitar é entre maio e setembro (período de seca).<br><br>
+
+                            <strong>2. Parágrafo Final:</strong><br>
+                            "Bem-vindo à Chapada dos Veadeiros! Prepare-se para uma terra mística, coberta por cristais. Ao planejar sua visita, lembre-se que o Parque Nacional fecha às segundas e a melhor época é na seca (maio-set). Uma dica de ouro: leve dinheiro vivo! E para sua segurança, a contratação de guias é indispensável em muitas trilhas. Aproveite a aventura!"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <!-- Slide 16: System Prompt -->
+            <div class="slide" data-slide="13">
+                <div class="slide-content" style="max-width: 1600px; height: 95%;">
+                    <h1>Análise Interativa de um System Prompt Avançado</h1>
+                    <p class="description" style="text-align: center;">Clique em uma técnica na lista à esquerda para ver a descrição e destacar a parte correspondente no prompt à direita.</p>
+                    
+                    <div class="interactive-prompt-container">
+                        <div class="technique-menu">
+                            <button class="technique-button" data-target="tech-1" data-description="Define a identidade e o nível de especialização da IA para guiar seu comportamento e tom.">1. Definição de Persona</button>
+                            <button class="technique-button" data-target="tech-2" data-description="Fornece o contexto essencial do projeto (tecnologias, objetivos) para que a IA entenda o escopo do trabalho.">2. Contextualização Estruturada</button>
+                            <button class="technique-button" data-target="tech-3" data-description="Estabelece regras que exigem aprovação do usuário antes de executar ações de alto impacto, garantindo controle total.">3. Framework de Permissões</button>
+                            <button class="technique-button" data-target="tech-4" data-description="Fornece um modelo estruturado e reutilizável para a IA formatar suas saídas, garantindo consistência.">4. Template Pattern</button>
+                            <button class="technique-button" data-target="tech-5" data-description="Instrui a IA a quebrar tarefas complexas em etapas menores, permitindo validação e feedback progressivos.">5. Abordagem Incremental</button>
+                            <button class="technique-button" data-target="tech-6" data-description="Define uma estrutura de tags clara e previsível para todas as respostas da IA.">6. Formato de Saída Estruturado</button>
+                            <button class="technique-button" data-target="tech-7" data-description="Orienta a IA a 'pensar profundamente' sobre um problema, considerando múltiplas facetas antes de propor uma solução.">7. Instruções de Raciocínio</button>
+                            <button class="technique-button" data-target="tech-8" data-description="Estabelece um processo sistemático e repetível para a execução de tarefas, como um fluxograma de trabalho.">8. Framework de Execução</button>
+                            <button class="technique-button" data-target="tech-9" data-description="Organiza ações ou sugestões em categorias hierárquicas baseadas em risco, complexidade ou impacto.">9. Categorização por Níveis</button>
+                            <button class="technique-button" data-target="tech-10" data-description="Fornece exemplos concretos de como se comunicar, ensinando à IA o tom e o estilo de linguagem desejados.">10. Exemplos de Linguagem</button>
+                            <button class="technique-button" data-target="tech-11" data-description="Define explicitamente o que a IA NÃO deve fazer, estabelecendo limites e barreiras de segurança claros.">11. Instruções Negativas</button>
+                            <button class="technique-button" data-target="tech-12" data-description="Define critérios específicos que a IA deve usar para avaliar uma situação antes de tomar uma decisão ou fazer uma sugestão.">12. Critérios de Avaliação</button>
+                            <button class="technique-button" data-target="tech-13" data-description="Estabelece princípios fundamentais e padrões de qualidade (ex: Material Design) que devem ser seguidos.">13. Princípios de Design</button>
+                            <button class="technique-button" data-target="tech-14" data-description="Define pontos de parada obrigatórios no processo para obter feedback do usuário antes de continuar.">14. Checkpoints de Validação</button>
+                            <button class="technique-button" data-target="tech-15" data-description="Organiza o prompt em seções temáticas distintas usando tags, cada uma com um propósito claro e focado.">15. Separação de Responsabilidades</button>
+                            <button class="technique-button" data-target="tech-16" data-description="Estabelece que as permissões dadas pelo usuário não são fixas e podem ser alteradas ou revogadas a qualquer momento.">16. Consentimento Dinâmico</button>
+                        </div>
+                        
+                        <div class="prompt-display-area">
+                            <div class="prompt-display">
+                                <pre><code><span id="tech-1">You are an elite Full Stack Architect and Product Engineering Specialist with deep expertise in TypeScript, Next.js 15, Supabase, and Material Design principles. You have been commissioned to build and elevate production-grade applications to premium standards matching Google and Apple products.</span>
+
+<span id="tech-2"><span id="tech-15">&lt;project_context&gt;</span>
+**Technical Stack**: TypeScript, Next.js 15, Supabase (Database, Auth, Edge Functions), Material UI ecosystem, React Query/TanStack Query
+**Target Excellence**: Google/Apple-grade modern, elegant, and intuitive full-stack applications
+**Mission**: End-to-end production-ready deployment with exceptional user experience and robust backend architecture
+<span id="tech-15">&lt;/project_context&gt;</span></span>
+
+<span id="tech-3">&lt;user_consent_framework&gt;
+**CRITICAL: Always Seek Permission for Major Changes**
+
+Before implementing any significant modifications, you MUST:
+
+1. **Assess Current State**: Acknowledge and respect the existing project complexity and architecture[3]
+2. **Propose, Don't Impose**: Present improvement suggestions as options, not mandatory changes[3]
+3. **Seek Explicit Consent**: Ask for user approval before making structural changes...
+
+<span id="tech-4">**Permission Request Template**:
+
+🔄 PROPOSED CHANGE REQUIRING APPROVAL
+
+Current State: [Brief description of existing implementation]
+Proposed Enhancement: [Clear description of suggested improvement]
+Impact Level: [Low/Medium/High - affecting how many files/components]
+Benefits: [Specific advantages this change provides]
+Risks: [Potential issues or breaking changes]
+
+Approval needed before proceeding. Should I implement this change?</span>
+
+
+<span id="tech-16">**Dynamic Consent Principles**[3]:
+- Users can revise or revoke permissions at any time
+- Provide tiered autonomy levels: "Recommend Only," "Small Changes," or "Major Refactoring"
+- Maintain transparent decision pathways with clear explanations</span>
+&lt;/user_consent_framework&gt;</span>
+
+<span id="tech-5">&lt;incremental_development_approach&gt;
+**MANDATORY: Step-by-Step Progression**
+
+Never implement sweeping changes without user guidance. Follow this structured approach:
+
+**Phase 1: Assessment & Planning** (Always start here)
+...
+**Phase 2: Incremental Implementation**
+...
+**Phase 3: Validation & Iteration**
+...
+&lt;/incremental_development_approach&gt;</span>
+
+<span id="tech-13">&lt;design_philosophy&gt;
+Apply premium design principles from industry leaders:
+
+**Google Material Design 3.0**: ...
+**Apple Human Interface Guidelines**: ...
+&lt;/design_philosophy&gt;</span>
+
+<span id="tech-12">&lt;respectful_enhancement_strategy&gt;
+**Project Complexity Assessment**:
+
+Before suggesting changes, evaluate:
+- **Current Architecture Maturity**: Is this a prototype, MVP, or production app?
+- **Team Skill Level**: What level of complexity is appropriate?
+...
+
+<span id="tech-9">**Enhancement Recommendation Levels**:
+
+**Level 1: Polish & Refinement** (Low Risk)
+...
+**Level 2: Feature Enhancement** (Medium Risk)
+...
+**Level 3: Architectural Changes** (High Risk - Requires Explicit Approval)</span>
+...
+&lt;/respectful_enhancement_strategy&gt;</span>
+
+<span id="tech-7">&lt;reasoning_instructions&gt;
+For complex full-stack decisions and architectural challenges:
+
+**Think deeply** using Extended Thinking mode about system architecture, data flows, user experience, and security implications before proposing solutions.
+...
+&lt;/reasoning_instructions&gt;</span>
+
+<span id="tech-8">&lt;execution_framework&gt;
+**User-Guided Development Process**:
+
+1. **Initial Assessment**: ...
+2. **Priority Setting**: ...
+...
+&lt;/execution_framework&gt;</span>
+
+<span id="tech-6">&lt;output_specifications&gt;
+Structure all responses with clear user control:
+
+&lt;current_state_assessment&gt;
+...
+&lt;/current_state_assessment&gt;
+
+&lt;improvement_suggestions&gt;
+...
+&lt;/improvement_suggestions&gt;
+...
+<span id="tech-14">&lt;validation_checkpoint&gt;
+Clear stopping point for user feedback before proceeding
+&lt;/validation_checkpoint&gt;</span>
+...
+&lt;/output_specifications&gt;</span>
+
+<span id="tech-10">&lt;communication_guidelines&gt;
+...
+**Consent Language Examples**:
+- "I notice an opportunity to enhance [X]. Would you like me to show you some options?"
+...
+
+<span id="tech-11">**Never use language that suggests**:
+- Current implementation is wrong or inadequate
+- Changes are mandatory or critical</span>
+...
+&lt;/communication_guidelines&gt;</span>
+...</code></pre>
+                            </div>
+                            <div class="technique-description">
+                                <p>Selecione uma técnica para ver a descrição aqui.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 17: Melhores Práticas -->
+            <div class="slide" data-slide="14">
+                <div class="slide-content">
+                    <h1>Prompt Engineering: Regras de Ouro</h1>
+                    <p class="description">Aplicando na prática o que aprendemos para criar instruções de alta performance.</p>
+                    
+                    <div class="two-column" style="margin-top: 24px; align-items: flex-start; gap: 32px;">
+                        <div class="column">
+                            <h3 style="margin-top:0;">🧱 Estrutura e Clareza</h3>
+                            <ul>
+                                <li><strong>Seja um Especialista (Role Prompting):</strong> Sempre que possível, atribua uma persona à IA ("Você é um copywriter sênior..."). Isso foca o conhecimento e o tom da resposta.</li>
+                                <li><strong>Dê Exemplos (Few-Shot):</strong> Para formatação ou classificação, mostre à IA o que você quer com 2-3 exemplos. É a forma mais rápida de guiar o resultado.</li>
+                                <li><strong>Exija o Raciocínio (Chain of Thought):</strong> Para problemas complexos, não peça apenas a resposta. Exija o passo a passo ("Pense passo a passo..."). Isso aumenta drasticamente a precisão.</li>
+                                <li><strong>Use Delimitadores Claros:</strong> Em prompts longos, separe instruções, exemplos e contexto usando marcadores como `---`, `###`, ou tags como `&lt;contexto&gt;`.</li>
+                            </ul>
+                        </div>
+
+                        <div class="column">
+                            <h3 style="margin-top:0;">⚙️ Otimização e Estratégia</h3>
+                            <ul>
+                                <li><strong>Pense em Tokens, Não em Palavras:</strong> Lembre-se que o português consome mais tokens. Seja conciso para otimizar custo e velocidade.</li>
+                                <li><strong>Confronte o Problema (Self-Consistency):</strong> Para questões críticas com uma resposta correta, peça para a IA resolver de múltiplas formas e use a resposta mais consistente.</li>
+                                <li><strong>Considere o Inglês para Raciocínios Complexos:</strong> Devido ao desbalanceamento dos dados de treino, prompts em inglês podem gerar raciocínios mais robustos. Peça a resposta final em português.</li>
+                                <li><strong>Iterar é a Chave:</strong> O primeiro prompt raramente é o melhor. Teste, meça a qualidade da resposta e refine continuamente para criar sua biblioteca de prompts eficazes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: RAG (Retrieval Augmented Generation) -->
+            <div class="slide" data-slide="15">
+                <div class="slide-content">
+                    <h1>RAG: Dando uma Memória Externa à IA</h1>
+                    <p class="description" style="text-align: center;">O RAG conecta a IA a uma base de conhecimento, permitindo respostas baseadas em dados atualizados e privados.</p>
+                    
+                    <div style="text-align: center; margin: 20px auto; max-width: 75%;">
+                        <img src="image_deb107.png" alt="Diagrama de fluxo do RAG" style="width: 100%; border-radius: var(--radius-lg); border: 1px solid var(--color-border); background: white;">
+                    </div>
+
+                    <div class="three-step-flow">
+                        <div class="step-box">
+                            <h4>1. Preparar</h4>
+                            <p>Documentos são convertidos em vetores (embeddings) e armazenados em um Vector DB.</p>
+                        </div>
+                        <div class="step-box">
+                            <h4>2. Buscar</h4>
+                            <p>O sistema busca nos vetores os trechos de texto mais relevantes para a pergunta do usuário.</p>
+                        </div>
+                        <div class="step-box">
+                            <h4>3. Responder</h4>
+                            <p>O LLM recebe a pergunta + o contexto encontrado para gerar uma resposta precisa e baseada nos fatos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="two-column" style="margin-top: 24px; align-items: flex-start; border-top: 1px solid var(--color-border); padding-top: 24px;">
+                         <div class="column">
+                            <h3 style="color: var(--color-success); margin-top: 0;">✅ Vantagens</h3>
+                            <ul>
+                                <li>Combate "alucinações" com fatos.</li>
+                                <li>Usa dados privados e recentes (pós-treino).</li>
+                                <li>Permite citar fontes, gerando confiança.</li>
+                            </ul>
+                         </div>
+                         <div class="column">
+                            <h3 style="color: var(--color-error); margin-top: 0;">⚠️ Limitações</h3>
+                             <ul>
+                                <li>Qualidade da resposta = qualidade dos dados.</li>
+                                <li>Adiciona complexidade e maior latência.</li>
+                                <li>Busca pode falhar com perguntas ambíguas.</li>
+                             </ul>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12: MCP (Model Context Protocol) -->
+            <div class="slide" data-slide="16">
+                <div class="slide-content">
+                    <h1>MCP: De Oráculo a Colaborador Ativo</h1>
+                    <p class="description" style="text-align: center;">O MCP transforma a IA de uma ferramenta que executa comandos para um parceiro que colabora em projetos.</p>
+
+                    <div style="text-align: center; margin: 16px 0;">
+                        <img src="image_e1675c.png" alt="Diagrama da arquitetura MCP" style="max-width: 60%; max-height: 400px; width: auto; height: auto; border-radius: var(--radius-lg);">
+                    </div>
+
+                    <div class="two-column" style="margin-top: 20px; align-items: flex-start; gap: 32px;">
+                        <div class="column">
+                            <h3 style="margin-top:0;">A Limitação dos Plugins Comuns</h3>
+                            <p>Plugins tradicionais e chamadas de API funcionam como ferramentas de um só uso: a IA pede algo, recebe uma resposta e a interação acaba. Isso é insuficiente para tarefas complexas que exigem um diálogo contínuo e a manutenção de um "estado de trabalho" (contexto).</p>
+                        </div>
+                        <div class="column">
+                            <h3 style="margin-top:0; color: var(--color-primary);">A Revolução do MCP: Co-programação</h3>
+                            <p>O MCP cria um <strong>diálogo persistente e bidirecional</strong>. A IA e as ferramentas "conversam" e colaboram ativamente. A IA pode pedir ao Slack para enviar uma mensagem, e o Slack pode "avisar" a IA de volta quando uma resposta chegar. É uma colaboração em tempo real.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="note" style="margin-top: 24px; text-align:center; padding: 12px; background-color: var(--color-secondary);">
+                         <p style="margin:0; font-size: var(--font-size-lg);"><strong>O Salto Conceitual:</strong> De um "executor de tarefas" para um "parceiro de projeto".</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 13: Exemplos de Servidores MCP -->
+            <div class="slide" data-slide="17">
+                <div class="slide-content">
+                    <h1>Exemplos de Servidores MCP</h1>
+                    <p class="description">Servidores MCP são as implementações práticas que conectam a IA às suas ferramentas, dando-lhes "superpoderes".</p>
+                    <div class="mcp-examples">
+                        <div class="example-card">
+                            <h3>📚 Context7: O Especialista em Documentação</h3>
+                            <p><strong>Funcionalidade:</strong> Manter a documentação de um projeto sempre sincronizada com o código-fonte.</p>
+                            <ul>
+                                <li>Rastreia mudanças em APIs e componentes em tempo real.</li>
+                                <li>Atualiza exemplos de código na documentação automaticamente.</li>
+                                <li>Garante que a ajuda oferecida pela IA seja sempre baseada na versão mais recente do código.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h3>🤖 Serena: A Arquiteta de Software</h3>
+                            <p><strong>Funcionalidade:</strong> Agente de codificação que compreende e modifica o projeto em um nível profundo.</p>
+                            <ul>
+                                <li><strong>Utiliza Análise Semântica:</strong> Compreende o <strong>significado e propósito</strong> do código, analisando fluxo de dados e dependências.</li>
+                                <li><strong>Realiza Edição Simbólica:</strong> Modifica funções e classes como blocos lógicos, preservando a estrutura do projeto.</li>
+                                <li>Consegue realizar refatorações complexas, sugerir melhorias de arquitetura e detectar anti-padrões de forma autônoma.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14: RAG vs MCP -->
+            <div class="slide" data-slide="18">
+                <div class="slide-content">
+                    <h1>RAG vs MCP - Comparação</h1>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Aspecto</th>
+                                    <th>RAG</th>
+                                    <th>MCP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Propósito</strong></td>
+                                    <td>Recuperar informações relevantes</td>
+                                    <td>Integração direta com ferramentas</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Interação</strong></td>
+                                    <td>Busca e recuperação</td>
+                                    <td>Execução de ações</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Contexto</strong></td>
+                                    <td>Estático (documentos)</td>
+                                    <td>Dinâmico (ferramentas ativas)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Latência</strong></td>
+                                    <td>Média (busca + geração)</td>
+                                    <td>Baixa (conexão direta)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Casos de Uso</strong></td>
+                                    <td>FAQ, documentação, pesquisa</td>
+                                    <td>Desenvolvimento, automação, análise</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Limitações</strong></td>
+                                    <td>Dependente da qualidade dos docs</td>
+                                    <td>Requer integração técnica complexa</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="when-to-use">
+                        <div class="use-case">
+                            <h3>🔍 Use RAG quando:</h3>
+                            <ul>
+                                <li>Precisar de informações específicas de documentos</li>
+                                <li>Trabalhar com conhecimento estático</li>
+                                <li>Implementação simples for prioridade</li>
+                            </ul>
+                        </div>
+                        <div class="use-case">
+                            <h3>⚙️ Use MCP quando:</h3>
+                            <ul>
+                                <li>Precisar executar ações dinâmicas</li>
+                                <li>Trabalhar com ferramentas interativas</li>
+                                <li>Contexto em tempo real for essencial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Conclusão -->
+            <div class="slide" data-slide="19">
+                <div class="slide-content" style="max-width: 900px;">
+                    <h1 style="color: var(--color-primary); font-size: 52px; text-align: center;">De Engenheiro de Prompts a Arquiteto de IA</h1>
+                    
+                    <h2 style="font-weight: var(--font-weight-normal); margin-top: 32px;">
+                        Nesta jornada, vimos como evoluir de instruções simples para <strong style="color: var(--color-text);">prompts com raciocínio estruturado (CoT)</strong>, e como a combinação de múltiplas técnicas em um <strong style="color: var(--color-text);">system prompt robusto</strong> nos dá controle total sobre o comportamento do modelo.
+                    </h2>
+                    
+                    <h2 style="font-weight: var(--font-weight-normal); margin-top: 24px;">
+                        O verdadeiro salto, no entanto, acontece quando paramos de ver a IA como uma caixa preta. Ao usar <strong style="color: var(--color-text);">RAG e MCP</strong>, nós a transformamos de um oráculo para um <strong style="color: var(--color-text);">colaborador ativo</strong>, com memória externa e capacidade de agir no mundo digital.
+                    </h2>
+
+                    <div class="note" style="margin-top: 40px; text-align:center; border-top: 1px solid var(--color-border); padding-top: 24px;">
+                         <p style="margin:0; font-size: var(--font-size-xl); color: var(--color-text);">A sua jornada como arquiteto de sistemas de IA começa agora.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="navigation-controls">
+            <button class="nav-btn" id="prevBtn">← Anterior</button>
+            <span class="slide-counter" id="slideCounter">1 / 18</span>
+            <button class="nav-btn" id="nextBtn">Próximo →</button>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
